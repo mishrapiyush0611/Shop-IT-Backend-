@@ -1,10 +1,21 @@
 const User=require('../models/User');
 const sendToken = require('../Utils/jwtToken');
-
+const cloudinary=require('cloudinary')
 exports.registerUser=(async(req,res,next)=>{
+    const result=await cloudinary.v2.uploader.upload(req.body.avatar,{
+        folder:'avatars',
+        width:150,
+        crop:'scale'
+    })
     const {name,email,password}=req.body;
     const user=await User.create({
-        name,email,password
+        name,
+        email,
+        password,
+        avatar:{
+            public_id:result.public_id,
+            url:result.secure_url
+        }
     })
     const token=user.getJwtToken();
 
@@ -19,11 +30,12 @@ exports.loginUser=(async(req,res )=>{
     if(!user){
         res.status(401).send("Invalid Email or password")
     }
+    console.log(user)
     const isPasswordmatched=await user.comparePassword(password)
     if(!isPasswordmatched){
         res.status(401).send("Invalid Email or password")
     }
-    const token=user.getJwtToken();
+    
     sendToken(user,200,res)
 })
 //get currently logged in user details
