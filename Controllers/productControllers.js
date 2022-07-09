@@ -99,7 +99,8 @@ exports.createProductReview=async(req,res,next)=>{
     product.ratings=product.reviews.reduce((acc,item)=>item.rating+acc,0)/product.reviews.length
     await product.save({validateBeforeSave:false}) 
     res.status(200).json({
-        success:true
+        success:true,
+        product
     })
 }
 exports.getProductReview=async(req,res,next)=>{
