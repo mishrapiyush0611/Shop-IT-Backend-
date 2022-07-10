@@ -8,7 +8,10 @@ app.use(express.json())
 app.use(cookieParser()); 
 app.use(bodyparser.urlencoded({extended:true}) )
 app.use(fileUpload())
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 //Setting up cloudinary
 
 
