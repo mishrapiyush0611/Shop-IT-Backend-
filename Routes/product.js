@@ -7,9 +7,11 @@ const {getProducts,
        deleteProduct,
        createProductReview,
        getProductReview,
-       deleteProductReview}=require('../Controllers/productControllers')
+       deleteProductReview,
+       getadminProducts}=require('../Controllers/productControllers')
 const {isAuthenticatedUser,authorizeRoles }=require('../middleWare/auth')
 router.route('/products').get(getProducts);
+router.route('/admin/products').get(getadminProducts);
 router.route('/admin/product/new').post(isAuthenticatedUser,newProduct);
 router.route('/product/:id').get(getSingleProduct);
 router.route('/admin/product/:id').put(isAuthenticatedUser,updateProduct);
