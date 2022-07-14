@@ -101,7 +101,12 @@ exports.deleteProduct=async(req,res,next)=>{
             message:"No product found"
         })
     }
-    await product.remove
+
+
+    for (let i = 0; i < product.images.length; i++) {
+        const result = await cloudinary.v2.uploader.destroy(product.images[i].public_id)
+    }
+    await product.remove();
     res.status(200).json({
         success:true,
         message:"product removed"

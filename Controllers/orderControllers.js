@@ -4,17 +4,16 @@ const Product=require('../models/product')
 
 exports.newOrder=async (req,res,next)=>{
         const {orderItems,
-        ShippingInfo,
+        shippingInfo,
         itemsPrice,
-        taxPrice,
         shippingPrice,
         totalPrice,
         paymentInfo}=req.body
     const order=await Order.create({
         orderItems,
-        ShippingInfo,
+        shippingInfo,
         itemsPrice,
-        taxPrice,
+     
         shippingPrice,
         totalPrice,
         paymentInfo,
